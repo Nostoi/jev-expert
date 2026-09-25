@@ -72,8 +72,8 @@ jobs:
         run: |
           VERSION=$(python scripts/check_version.py --print-version)
           TAG="v$VERSION"
-          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
-            echo "$TAG already exists; nothing to release."
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release $TAG already exists; nothing to release."
             exit 0
           fi
           python scripts/check_version.py --tag "$TAG"

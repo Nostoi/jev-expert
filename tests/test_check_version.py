@@ -120,6 +120,15 @@ def test_semver_compared_numerically(repo):
     assert r.returncode == 0, r.stderr
 
 
+def test_shipped_rename_out_without_bump_fails(repo):
+    (repo / "docs").mkdir()
+    git(repo, "mv", "skills/SKILL.md", "docs/retired-skill.md")
+    commit(repo, "retire skill")
+    r = run(repo, "--base", "base")
+    assert r.returncode == 1
+    assert "skills/SKILL.md" in r.stderr and "0.1.0" in r.stderr
+
+
 def test_non_shipped_change_needs_no_bump(repo):
     (repo / "README.md").write_text("new readme")
     commit(repo)

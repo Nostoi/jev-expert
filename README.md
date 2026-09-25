@@ -35,7 +35,7 @@ claude plugin marketplace add Nostoi/jev-expert
 claude plugin install jev-expert@jev-expert
 ```
 
-Pick up new releases with `claude plugin marketplace update jev-expert`.
+Pick up new releases with `claude plugin marketplace update jev-expert` followed by `claude plugin update jev-expert@jev-expert`.
 
 To work on the plugin from a clone: `claude --plugin-dir /path/to/jev-expert`.
 

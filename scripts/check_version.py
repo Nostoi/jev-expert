@@ -74,7 +74,11 @@ def main() -> int:
         errors.append(f"tag {args.tag} does not match plugin version v{version}")
 
     if args.base:
-        changed = [f for f in git("diff", "--name-only", f"{args.base}...HEAD").split() if f.startswith(SHIPPED)]
+        changed = [
+            f
+            for f in git("diff", "--name-only", "--no-renames", f"{args.base}...HEAD").split()
+            if f.startswith(SHIPPED)
+        ]
         if changed:
             try:
                 base_version = json.loads(git("show", f"{args.base}:{MANIFEST}"))["version"]
