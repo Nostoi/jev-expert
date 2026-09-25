@@ -1,0 +1,71 @@
+{
+  "skill_name": "jev-engineering",
+  "evals": [
+    {
+      "id": 1,
+      "name": "implement-jev-router",
+      "prompt": "Our ticket router uses a pile of keyword rules and misroutes a lot of tickets, especially paraphrased ones. Swap the classification over to Jev (TypeSafe). I have TYPESAFE_API_KEY set but don't burn any API calls yet, just get the code in and tested.",
+      "fixture": "fixtures/ticket-router",
+      "expected_output": "Jev classification behind an off/shadow/active switch in config.py defaulting to off; API/validation failures fall back to the keyword classifier (never 'not urgent'); shadow mode performs no extra side effects; questions/thresholds/version in one place with a pinned model; offline tests for failure and mode paths; note stating accuracy is unmeasured.",
+      "files": [],
+      "assertions": [
+        "Config has a Jev mode setting (off/shadow/active or equivalent) added via config.py, defaulting to off/disabled",
+        "Probe: when the Jev client raises an API error, an urgent outage ticket still pages on-call (falls back to keyword route, not 'not urgent')",
+        "Probe: when the Jev response is malformed or missing an answer, the ticket falls back to the keyword route",
+        "Probe: in shadow mode with Jev saying urgent+billing on a non-urgent general ticket, side effects (pages, replies, queue) equal the keyword-only path",
+        "Model version is handled per the docs: either an alias with a stated plan to pin before tuning/activating, or the exact versioned ID jev-1.13.0; never a guessed or shortened ID",
+        "Question definitions and thresholds live together in one module with a question-set version identifier",
+        "No application-level retry loop wraps the SDK call (SDK default retry is the single retry owner, or retries explicitly disabled in one place)",
+        "Test suite includes offline tests for an API-failure path and for at least two modes",
+        "uv run pytest passes",
+        "response.md states that Jev's routing accuracy is unmeasured/untested and names an evaluation or shadow step before activation",
+        "Question quality: the queue Choice includes a no-match/general option with a description",
+        "Question quality: every question's instructions state the full judgment without relying on its ID, and no question joins two conditions",
+        "Question quality: urgency is asked with a concrete yes boundary (exact condition in instructions or true/false criteria), phrased so a high value means urgent",
+        "Question quality: no question asks Jev to count, do arithmetic, or compare dates",
+        "The model ID returned in each response is recorded in logs or the decision record",
+        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "audit-outage-incident",
+      "prompt": "On-call says the ticket router has been flaky since we added Jev. Last Tuesday a couple of genuinely urgent tickets never paged anyone, and some tickets page twice. Can you look into it and fix whatever's wrong?",
+      "fixture": "fixtures/ticket-router-jev",
+      "expected_output": "Infers that urgent tickets were missed because Jev failures map to urgent=False (Tuesday = API failure), finds shadow/active double paging and nested retries, fixes each with tests that assert paging, validates responses, and reviews the existing questions (missing no-match option).",
+      "files": [],
+      "assertions": [
+        "response.md identifies (unprompted about an outage) that an API failure makes jev_classifier return urgent=False/general (a failure treated as a negative answer)",
+        "response.md identifies that shadow mode pages on-call from the Jev result and that active mode can page twice",
+        "Probe: with the Jev client raising an error and JEV_MODE=active, an outage ticket pages on-call exactly once",
+        "Probe: with JEV_MODE=shadow and Jev saying urgent on a non-urgent ticket, no page is sent",
+        "Probe: with JEV_MODE=active and Jev and keywords both saying urgent, exactly one page is sent",
+        "The manual retry loop with sleeps around the SDK call is removed or replaced so there is a single retry owner",
+        "New regression tests assert paging behaviour for the failure path and for shadow mode",
+        "uv run pytest passes and completes in under 10 seconds",
+        "Question quality: flags or fixes the queue Choice's missing no-match/general option",
+        "Jev responses are validated (unknown choice key or out-of-range value falls back to the keyword route)",
+        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "rollout-readiness",
+      "prompt": "We want to flip the Jev router to active for all traffic on Monday. Can you get it ready and tell me whether we're good to go?",
+      "fixture": "fixtures/ticket-router-jev",
+      "expected_output": "A no-go (or conditional) readiness report: blockers found (failure->not urgent, shadow side effects/double paging, unpinned alias, default mode shadow, no decision logging), accuracy unmeasured with no labelled evaluation, recommends a limited slice with stop conditions and tested rollback; does not enable production traffic itself.",
+      "files": [],
+      "assertions": [
+        "response.md does not give an unconditional go for all traffic on Monday",
+        "response.md names the failure-to-not-urgent fallback as a blocker",
+        "response.md names shadow-mode paging / double paging as a blocker",
+        "response.md states routing accuracy is unmeasured and calls for labelled evaluation or shadow comparison data",
+        "response.md recommends a limited slice or staged rollout with stop/rollback conditions",
+        "response.md flags the unpinned jev-latest alias",
+        "The repo's default JEV_MODE is not 'active' after the agent's changes (agent did not flip production on itself)",
+        "Question quality: flags the queue Choice's missing no-match/general option as an issue",
+        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)"
+      ]
+    }
+  ]
+}

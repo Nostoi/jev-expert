@@ -1,0 +1,5 @@
+jev-engineering-workspace/
+.venv/
+__pycache__/
+.pytest_cache/
+uv.lock
