@@ -1,0 +1,3 @@
+{"id": "e1", "state": {"text": "My card was charged twice, please refund the extra charge."}, "labels": {"urgent": false, "queue": "billing"}}
+{"id": "e2", "state": {"text": "Production is down, nobody can log in right now!!!"}, "labels": {"urgent": true, "queue": "technical"}}
+{"id": "e3", "state": {"text": "How do I reset my password?"}, "labels": {"urgent": false, "queue": "account"}}

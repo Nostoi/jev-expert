@@ -204,8 +204,14 @@ Read these when the task calls for them:
 - `references/evaluation.md` – how to evaluate a Jev decision: splits, baselines,
   coverage vs selective error, critical misses, failure taxonomy by layer.
   Read when designing an evaluation or writing the go/no-go report.
-- `references/recipes.md` – proposed designs for twenty common insertion points
+- `scripts/question_eval.py` – runs the live question test: labelled examples and
+  one or more question-set variants in, per-question accuracy, confusion,
+  near-threshold and high-confidence errors, and run-to-run stability out. Dry-run
+  by default (prints the call count); `--live` needs `--model`, `--max-calls`, and
+  the user's go-ahead. Run it with `--help` for input formats.
+- `references/recipes.md` – proposed designs for twenty-one common insertion points
   (handler routing, model routing, UI action selection, memory filtering, citation
-  checks, CI policy checks, research screening, support intake, and more), each with
+  checks, CI policy checks, research screening, rubric scoring of another system's
+  output, support intake, and more), each with
   required evidence, questions, traps, and measures. Read the matching recipe when
   the task resembles one.

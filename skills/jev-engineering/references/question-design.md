@@ -139,6 +139,10 @@ A static review finds ambiguity; only data shows accuracy. This needs API calls,
 get the user's go-ahead and state the expected call count and cost first. Pin the
 versioned model ID.
 
+`scripts/question_eval.py` automates steps 2–4: give it the labelled examples as
+JSONL and each wording variant as a questions file. Run it without `--live` first to
+get the call count to show the user.
+
 1. **Labelled examples.** Collect real inputs with the expected answer for each
    question, written down before running. Include clear cases, boundary cases, inputs
    that fit no option, and challenge cases built from the jaggedness failure modes
@@ -146,7 +150,13 @@ versioned model ID.
    instructions). Keep some examples aside for a final check.
 2. **Accuracy.** Compare answers with labels: a confusion matrix for Choice (watch the
    no-match option), errors near the threshold for Noul, errors between neighbouring
-   levels for Score.
+   levels for Score. Two patterns point at the wording rather than the model: a flat
+   distribution across options (unclear criteria or state too thin to decide, per
+   `/primitives/score` for Scores), and high confidence alongside middling agreement
+   with your labels (criteria clear enough to commit to but not drawing the
+   distinction you intend; rewrite the criteria).
+   Record every component answer, not only a combined score, so a later change of
+   weights or combination rule can be re-run without calling the model again.
 3. **Variant comparisons.** Change one thing at a time and re-run the same labelled
    set: a reworded instruction, with and without Noul `criteria`, string vs object
    option descriptions, reordered Choice options. Keep the variant that is more
@@ -158,7 +168,16 @@ versioned model ID.
    from cache (per `/cookbooks/consistency_choice_cookbook`), and show answers close
    to a threshold can flip between runs. Values that sit near a decision threshold
    belong in an explicit uncertain / review band rather than being forced to one side.
-5. **Record** model ID, question-set version, and results, so a later wording change
+5. **Decomposition test.** When a compound judgment underperforms, compare it with
+   the same decision split into one question per signal, combined in code. With
+   enough labelled data, fit the combination (for example a logistic regression) on
+   one split and score it on another rather than hand-picking weights. One
+   practitioner write-up reports a phishing benchmark moving from 62.6% on a single
+   compound question to 95.0% with five atomic questions plus a fitted combiner
+   (relayed from lmspedia.org/how-to-write-jev-questions, 2026-09-22; the
+   underlying study was not reviewed here). Treat it as a reason to run the
+   comparison, not as an expected gain.
+6. **Record** model ID, question-set version, and results, so a later wording change
    can be compared against this baseline.
 
 ---

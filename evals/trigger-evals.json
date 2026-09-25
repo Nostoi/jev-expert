@@ -1,0 +1,23 @@
+[
+  {"query": "our support app has a ticket_classifier.py that calls gpt-4o-mini and regex-parses the json it spits out, it breaks like twice a week. can you swap that step over to jev? TYPESAFE_API_KEY is in .env", "should_trigger": true},
+  {"query": "I want to put Jev behind a flag in the moderation service (services/moderation/decide.py) so we can run it in shadow next to the current rules for a couple weeks before trusting it. Set that up?", "should_trigger": true},
+  {"query": "We added TypeSafe to the refund-eligibility check last sprint. Yesterday their API had a blip and a bunch of refunds got auto-approved. Can you figure out why and fix it?", "should_trigger": true},
+  {"query": "PM wants the jev-based lead router at 100% next week. can you look over integrations/jev_router.py and tell me honestly whether its ready and what we'd need first", "should_trigger": true},
+  {"query": "can you review the questions in app/typesafe_questions.py? half our 'is_spam' nouls come back around 0.5 and I'm not sure if it's the wording or the thresholds", "should_trigger": true},
+  {"query": "wire up TypeSafe system_one in our FastAPI backend to decide which of our 6 agent handlers gets a request. there's already a dispatcher in app/dispatch.py, keep it as the fallback", "should_trigger": true},
+  {"query": "in my jevaluator project the Jev judge in src/jevaluator/judges/jev.py swallows timeouts and reports the statement as fine. how should that be handled properly?", "should_trigger": true},
+  {"query": "We're replacing our zero-shot BART classifier for PR policy checks with Jev noul questions in CI. How do we measure whether it's actually better before we make it block merges?", "should_trigger": true},
+  {"query": "add a typesafe decision step to our n8n workflow that triages inbound partnership emails, it should never auto-reply, just sort into the existing queues", "should_trigger": true},
+  {"query": "our citation checker uses jev to judge whether each source passage supports the claim. retries are nested somewhere and a failed fetch shows up as 'unsupported'. clean it up", "should_trigger": true},
+
+  {"query": "whats the difference between TypeSafe's jev and just using haiku with structured outputs for classification? pricing + latency, roughly", "should_trigger": false},
+  {"query": "brainstorm some places in this repo where TypeSafe could replace fragile parsing code, just ideas for now, no code", "should_trigger": false},
+  {"query": "make our API client typesafe: generate zod schemas from openapi.yaml and use them in src/api/client.ts so responses are validated at runtime", "should_trigger": false},
+  {"query": "update the JEV tab in finance/2026_budget.xlsx, the joint venture revenue split changed to 60/40 in Q3", "should_trigger": false},
+  {"query": "add a shadow mode to our new sklearn churn model so it logs predictions next to the current heuristic without affecting emails. model is in ml/churn/predict.py", "should_trigger": false},
+  {"query": "our pagerduty alert router pages twice for the same incident sometimes, alerts come from prometheus alertmanager, config is in ops/alertmanager.yml", "should_trigger": false},
+  {"query": "set up exponential backoff with idempotency keys for our stripe webhook handler, we're double-charging on retries", "should_trigger": false},
+  {"query": "build an eval harness for our RAG pipeline: labelled question set, recall@5 for retrieval, and an LLM judge for answer faithfulness", "should_trigger": false},
+  {"query": "migrate the intent classifier from gpt-4o-mini to claude-haiku-4-5 with tool use for structured output, keep the same labels", "should_trigger": false},
+  {"query": "write me a Score question with 4 levels for bug severity that I can paste into the TypeSafe console to play with", "should_trigger": false}
+]

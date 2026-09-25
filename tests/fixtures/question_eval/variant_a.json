@@ -1,0 +1,15 @@
+{
+  "urgent": {
+    "type": "noul",
+    "instructions": "Is this ticket urgent and production-impacting?"
+  },
+  "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle this support ticket?",
+    "criteria": {
+      "billing": "Invoices, refunds, charges, payment methods.",
+      "technical": "Errors, crashes, bugs, features not working.",
+      "account": "Login, password, SSO, 2FA, account access."
+    }
+  }
+}

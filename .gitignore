@@ -3,3 +3,4 @@ jev-engineering-workspace/
 __pycache__/
 .pytest_cache/
 uv.lock
+.hypothesis/

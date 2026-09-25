@@ -1,0 +1,15 @@
+{
+  "name": "jev-expert",
+  "description": "Engineering discipline for TypeSafe Jev integrations: a skill, a reviewer agent, and a question-test harness.",
+  "owner": {
+    "name": "Nostoi",
+    "url": "https://github.com/Nostoi"
+  },
+  "plugins": [
+    {
+      "name": "jev-expert",
+      "description": "Rollout modes, failure handling, question review, evaluation, and audits for code that calls TypeSafe Jev. Complements the official typesafe plugin.",
+      "source": "./"
+    }
+  ]
+}

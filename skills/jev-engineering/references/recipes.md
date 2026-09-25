@@ -12,7 +12,8 @@ Agent and research systems: A1 handler routing · A2 model routing · A3 UI acti
 selection · A4 instruction scope · A5 stalled-agent detection · A6 memory retention ·
 A7 compaction · A8 citation support · A9 CI policy checks · A10 in-product help ·
 A11 corpus screening · A12 ambiguous training labels · A13 agent disagreement triage ·
-A14 feedback by underlying problem · A15 text features for a predictive model
+A14 feedback by underlying problem · A15 text features for a predictive model ·
+A16 scoring another system's output against a rubric
 
 Business workflows: B1 support intake · B2 content preflight · B3 inbound sales
 routing · B4 document passage screening · B5 automation-tool HTTP branch
@@ -148,6 +149,29 @@ routing · B4 document passage screening · B5 automation-tool HTTP branch
 - **Traps:** using text written after the outcome (leakage); splitting after feature
   discovery; no path for a missing feature when Jev is down.
 - **Measure:** held-out error vs structured-only baseline, degradation without features.
+
+### A16 Score another system's output against a rubric
+Not from the paper; added for evaluation pipelines (voice or chat agents, generated
+reports, support replies) where an LLM judge currently grades a sample.
+- **Where:** offline or monitoring, after the system under test has produced its
+  output. The scored system is never blocked by the scorer.
+- **State:** the output (transcript, reply), the user's request, and the reference
+  material a rubric item needs: the knowledge-base passage for a grounding check,
+  the policy text for adherence, the action log for "confirmed before acting".
+- **Questions:** one per rubric item, in one request. Noul for events ("did the
+  agent confirm before the refund?", "did it state something the supplied passage
+  does not support?"); Score with situation-described levels for graded qualities
+  (caller effort, resolution completeness); Choice with `none`/`other` for labels
+  (intent, dominant failure mode). A change over time, such as sentiment at start vs
+  end, is two Scores on two segments, compared in code.
+- **Traps:** a scorer you have not validated is not evidence about the scored
+  system; check each rubric question against human labels first (run
+  `scripts/question_eval.py`). Jev reads text only, so audio qualities such as pace
+  or interruptions are out of reach. A grounding check only covers the passage you
+  supply; a retrieval miss looks like an unsupported claim. Compound rubric items
+  ("polite and accurate") must be split.
+- **Measure:** per-item agreement with human reviewers, high-confidence errors, and
+  how much scoring is automatic vs routed to people.
 
 ### B1 Support intake: ask for the missing detail first
 - **Where:** before retrieval and reply drafting.

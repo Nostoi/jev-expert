@@ -1,0 +1,19 @@
+{
+  "urgent": {
+    "type": "noul",
+    "instructions": "Does this ticket describe a production outage happening right now?",
+    "criteria": {
+      "true": "An active outage or data loss affecting users now.",
+      "false": "Anything else, including a past or resolved incident."
+    }
+  },
+  "queue": {
+    "type": "choice",
+    "instructions": "Which team owns this kind of support request?",
+    "criteria": {
+      "billing": "Invoices, refunds, charges, payment methods.",
+      "technical": "Errors, crashes, bugs, features not working.",
+      "account": "Login, password, SSO, 2FA, account access."
+    }
+  }
+}
