@@ -215,3 +215,5 @@ Read these when the task calls for them:
   output, support intake, and more), each with
   required evidence, questions, traps, and measures. Read the matching recipe when
   the task resembles one.
+
+<!-- throwaway: verifies the version gate; do not merge -->
