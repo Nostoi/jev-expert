@@ -84,6 +84,10 @@ is wrong:
    judgment actually needed? Compound question? Criteria overlapping, or no
    no-match option? Which question-set version ran?
 4. **Answer** – what did the raw typed answer say, and did it pass validation?
+   Whatever this event's answer was, check that the integration validates every
+   response as SKILL.md describes before the policy reads it. A missing check is a
+   finding at this layer; fix it with a fixture per invalid case (unknown choice
+   key, value out of range, non-finite value) that asserts the existing path ran.
 5. **Policy** – did the thresholds and mapping do what the policy intended? A
    policy bug is fixed in code, not by rewording a question.
 6. **Execution and verification** – did the executor act on the validated decision,
@@ -123,6 +127,8 @@ Verify, don't assume:
 - Shadow mode cannot duplicate external actions.
 - Retries preserve idempotency; there is a single retry owner.
 - An unavailable Jev produces `not_checked` / the old path, never a pass.
+- An invalid response (unknown choice key, value out of range, non-finite value)
+  produces `not_checked` / the old path.
 
 Name the owner who can enable the rollout, the slice to enable first, and the events
 that stop it (error spike, API failure rate, a critical miss, model alias moving).

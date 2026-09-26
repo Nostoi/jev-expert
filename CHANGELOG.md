@@ -8,6 +8,14 @@ shipped files (`.claude-plugin/`, `skills/`, `agents/`) that does not raise it.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-26
+
+### Fixed
+- Auditing a failed decision now includes checking that the integration validates
+  every Jev response, even when the reported event's answer was well-formed. The
+  skill notes that the Python SDK does not reject unknown choice keys or
+  out-of-range values, and the rollout checklist includes invalid responses.
+
 ## [0.1.1] - 2026-09-25
 
 ### Fixed
