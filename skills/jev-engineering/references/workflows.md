@@ -84,10 +84,6 @@ is wrong:
    judgment actually needed? Compound question? Criteria overlapping, or no
    no-match option? Which question-set version ran?
 4. **Answer** – what did the raw typed answer say, and did it pass validation?
-   Whatever this event's answer was, check that the integration validates every
-   response as SKILL.md describes before the policy reads it. A missing check is a
-   finding at this layer; fix it with a fixture per invalid case (unknown choice
-   key, value out of range, non-finite value) that asserts the existing path ran.
 5. **Policy** – did the thresholds and mapping do what the policy intended? A
    policy bug is fixed in code, not by rewording a question.
 6. **Execution and verification** – did the executor act on the validated decision,
@@ -99,6 +95,15 @@ model's reasoning; Jev returns probabilities, not explanations. Propose the mini
 fix at the failing layer and add a regression fixture. If a question change needs a
 live call to test, show the call and its scope and keep it separate from offline
 test results.
+
+Diagnosis stops at the first wrong layer; the audit does not. Before closing it,
+check the whole integration against the Build items in §1: failures and invalid
+responses (unknown choice key, value out of range, non-finite value) route to
+`not_checked` and the existing path, there is one retry owner, and shadow performs
+no business action. A defect found here counts even if it did not cause the
+reported event. If the user asked you to fix what is wrong, fix each one with a
+fixture asserting the existing path ran; if they asked only for a diagnosis, report
+them.
 
 ---
 
