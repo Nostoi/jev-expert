@@ -157,7 +157,7 @@ A missing "none of these" option or a Noul asking about degree is a defect in it
 right, not a style note. Report the findings and the fixes you made.
 
 The reverse does not hold. When the user asks only to review the questions
-themselves, report findings only about their wording and type, the state each one
+themselves, report findings only about the question definitions, the state each one
 reads, how they are grouped into requests, and how the code reads the answers. Say
 what you did not review and offer to, without asserting defects there. If you
 delegate to the reviewer agent, ask it for a question review. This does not apply
