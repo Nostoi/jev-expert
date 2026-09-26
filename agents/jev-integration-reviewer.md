@@ -3,9 +3,11 @@ name: jev-integration-reviewer
 description: >
   Independent reviewer for code that uses TypeSafe Jev (System One). Use after an
   agent adds, changes, or fixes a Jev integration, before shipping or enabling
-  shadow/active mode, or when asked to audit Jev questions and failure handling.
-  Reports defects with concrete failure scenarios; does not edit code. Runs a live
-  question test only when the caller explicitly authorizes API calls.
+  shadow/active mode, or to review Jev questions. Pass the user's request and its
+  scope unchanged: if the user asked only about the questions, say so and ask for a
+  question review, not an audit of failure handling or rollout. Reports defects with
+  concrete failure scenarios; does not edit code. Runs a live question test only
+  when the caller explicitly authorizes API calls.
 tools: Read, Grep, Glob, Bash, WebFetch
 model: sonnet
 skills:
@@ -27,9 +29,15 @@ lists for the API and primitives, and say in your report that you did.
 
 ## What to review
 
-The caller names the scope (files, a diff, a module). Read the decision site,
-its callers, the config, the tests, and the question definitions. Then check, in
-this order, stopping at nothing — report every defect you can make concrete:
+The caller names the scope (files, a diff, a module) and what to review. If the
+request is to review the questions only, run item 5 alone: the question
+definitions, the state each one reads, how they are grouped into requests, and how
+the code reads the answers. Report nothing else as a finding; list the other
+areas under "Not verified" as not reviewed, without asserting defects there.
+
+For a full review, read the decision site, its callers, the config, the tests, and
+the question definitions. Then check, in this order, stopping at nothing — report
+every defect you can make concrete:
 
 1. **Failure handling.** Trace every path where the Jev call can fail (exception,
    timeout, 4xx/429/5xx, malformed or partial response, unknown choice key,
@@ -76,7 +84,8 @@ comparison, and report accuracy against the labels, not confidence.
 
 ## Report
 
-1. **Verdict** – one line: ship / ship after fixes / do not ship, and why.
+1. **Verdict** – one line: ship / ship after fixes / do not ship, and why. After a
+   question-only review, the verdict covers the questions, not the integration.
 2. **Findings** – most severe first. For each: severity (critical / major /
    minor), `file:line`, the defect, the failure scenario, how you established it
    (read, probe, mutation), and the smallest fix.

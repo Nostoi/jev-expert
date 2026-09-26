@@ -156,6 +156,13 @@ modify, audit, or prepare for rollout, even when the task is about something els
 A missing "none of these" option or a Noul asking about degree is a defect in its own
 right, not a style note. Report the findings and the fixes you made.
 
+The reverse does not hold. When the user asks only for a review of the questions,
+review the questions: their wording and type, the state each one reads, how they
+are grouped into requests, and how the code reads the answers. Leave failure
+handling, modes, retries, logging, and tests out of the findings; say which of
+those you did not review and offer to, without asserting defects there. If you
+delegate to the reviewer agent, ask it for a question review.
+
 ## Credentials
 
 Keep API keys out of logs, test output, and your own transcript. To check whether a
