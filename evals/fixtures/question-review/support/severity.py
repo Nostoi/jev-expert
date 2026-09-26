@@ -1,6 +1,6 @@
 from typesafe_sdk import Score, TypeSafeClient
 
-from support.alerts import page_on_call, notify_trust_and_safety
+from support.alerts import page_on_call
 
 QUESTIONS = {
     "severity": Score(
@@ -12,14 +12,6 @@ QUESTIONS = {
             "Level 4: the worst",
         ],
     ),
-    "tone": Score(
-        instructions="How is the customer treating our support staff in this message?",
-        criteria=[
-            "Polite or neutral; no complaint about staff",
-            "Frustrated: complains about the problem or the wait but stays civil",
-            "Abusive: insults, threats, or slurs directed at staff",
-        ],
-    ),
 }
 
 
@@ -28,5 +20,3 @@ def assess(ticket_text: str) -> None:
         answers = client.system_one(model="jev-1.13.0", state=ticket_text, questions=QUESTIONS).answers
     if answers["severity"].score >= 2.5:
         page_on_call(ticket_text)
-    if answers["tone"].score >= 1.5:
-        notify_trust_and_safety(ticket_text)

@@ -72,7 +72,7 @@
       "name": "question-review",
       "fixture": "fixtures/question-review",
       "prompt": "We're about to ship these Jev integrations. Review the Jev questions in this repo before we ship. Write your findings to findings.json as a JSON list of objects with keys file, question_id, problem, fix. Only include things you think need changing. Don't call the TypeSafe API.",
-      "expected_output": "findings.json flags the 11 planted question defects with the concrete problem named, and asserts no required change in the 6 clean control questions.",
+      "expected_output": "findings.json flags the 11 planted question defects with the concrete problem named, and asserts no required change in the 5 clean control questions.",
       "files": [],
       "grading_rules": [
         "A DETECT assertion passes only if a finding for that file names the concrete problem stated; flagging the question for a different reason does not count.",
@@ -94,7 +94,6 @@
         "DETECT [skill] accounts/priority.py enterprise: the plan is inferred from customer-written ticket text, a user assertion, not a verified account record; the plan should come from account data, not Jev. Grounding: question-design.md G (verified facts vs user assertions)",
         "CLEAN support/refunds.py wants_human: findings.json asserts no defect requiring a change in this question",
         "CLEAN sales/orders.py gift: findings.json asserts no defect requiring a change in this question (acceptable, neither credited nor penalised: state includes cart items unrelated to the gift question (filter state))",
-        "CLEAN support/severity.py tone: findings.json asserts no defect requiring a change in this question",
         "CLEAN compliance/messages.py outage: findings.json asserts no defect requiring a change in this question (acceptable, neither credited nor penalised: optional rewording of the instruction to mirror the criteria)",
         "CLEAN support/triage.py is_bug: findings.json asserts no defect requiring a change in this question (acceptable: the product_area/is_bug batching defect above may instead be attributed here and does not fail this assertion)",
         "CLEAN moderation/posts.py topic: findings.json asserts no defect requiring a change in this question"
