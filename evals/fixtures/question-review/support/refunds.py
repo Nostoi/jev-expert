@@ -9,7 +9,7 @@ QUESTIONS = {
     "wants_human": Noul(
         instructions="Does the customer ask to speak with a person instead of getting an automated reply?",
         criteria=NoulCriteria(
-            true="Asks for a human, an agent, a manager, or a phone call",
+            true="Asks for a human, an agent, a manager, or a phone call with a person",
             false="No request to talk to a person",
         ),
     ),
