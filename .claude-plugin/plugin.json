@@ -1,6 +1,6 @@
 {
   "name": "jev-expert",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Production-integration discipline for TypeSafe Jev: rollout modes, failure handling, versioning, evaluation, and audits. Complements the official typesafe plugin.",
   "author": {
     "name": "Mark Jedrzejczyk"

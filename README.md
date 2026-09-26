@@ -93,6 +93,20 @@ Iteration 1 scored 94% against 65%. In a separate headless run, the reviewer age
 found the defects planted in `evals/fixtures/ticket-router-jev`. The prompts,
 assertions and fixtures are in `evals/` so you can rerun or extend them.
 
+A fourth eval asks only for a review of the Jev questions in eleven files, with ten
+defects drawn from the docs, one from this skill, and five clean controls. Each arm
+ran three times and a model graded all nine runs against the same key:
+
+| Eval 4, three runs each | Docs defects | Skill defect | Clean controls | Out-of-scope findings |
+|---|---|---|---|---|
+| Official skill only | 29/30 | 3/3 | 15/15 | 0 |
+| With 0.1.0 | 28/30 | 3/3 | 15/15 | 29 |
+| With 0.1.1 | 30/30 | 3/3 | 15/15 | 0 |
+
+On question review alone the plugin adds nothing measurable over the official
+skill. Version 0.1.0 padded the review with failure-handling findings the user had
+not asked for; 0.1.1 keeps a question-only request on the questions.
+
 ## Versioning
 
 The plugin follows [Semantic Versioning](https://semver.org/):

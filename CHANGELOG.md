@@ -8,6 +8,15 @@ shipped files (`.claude-plugin/`, `skills/`, `agents/`) that does not raise it.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-25
+
+### Fixed
+- A request to review only the Jev questions no longer turns into a full
+  integration audit. The `jev-integration-reviewer` description tells callers to
+  pass the user's scope unchanged, the agent runs only its question check for a
+  question-only request, and the skill keeps its own question reviews to the
+  questions, their state, their grouping, and how the code reads the answers.
+
 ## [0.1.0] - 2026-09-25
 
 ### Added
