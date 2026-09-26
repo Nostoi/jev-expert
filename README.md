@@ -107,8 +107,9 @@ On question review alone the plugin adds nothing measurable over the official
 skill. Version 0.1.0 padded the review with failure-handling findings the user had
 not asked for; 0.1.1 keeps a question-only request on the questions.
 
-Eval 2 (the outage audit) was rerun three times per version in an isolated
-session that loads only this plugin and the official one. Models graded the runs
+Eval 2 (the outage audit) was rerun three times per version in a session with no
+user settings and no plugins beyond this one, the official one, and Claude Code's
+built-ins. Models graded the runs
 without knowing the version, using separate probes for an unknown choice key, a
 probability above 1, one below 0, and NaN, plus a valid answer as a control:
 
