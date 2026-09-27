@@ -8,6 +8,15 @@ shipped files (`.claude-plugin/`, `skills/`, `agents/`) that does not raise it.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-26
+
+### Fixed
+- An audit of a failed decision no longer ends at the layer that caused it. Before
+  closing, it checks the whole integration for invalid responses reaching the
+  policy, more than one retry owner, and shadow side effects, and fixes what it
+  finds when asked to fix. The skill notes that the Python SDK does not reject unknown choice keys or
+  out-of-range values, and the rollout checklist includes invalid responses.
+
 ## [0.1.1] - 2026-09-25
 
 ### Fixed

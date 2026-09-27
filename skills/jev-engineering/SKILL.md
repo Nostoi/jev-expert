@@ -83,8 +83,11 @@ A failed fetch, an empty document, a 5xx, or a malformed body must land in
 category. Write a test for each of these paths; they are the ones that break silently.
 
 Validate the response before the policy reads it: every requested answer present,
-correct type, finite numbers, choice keys drawn from the criteria you sent, score
-within range. Validation catches contract problems. It says nothing about whether
+correct type, finite numbers, choice keys drawn from the criteria you sent,
+probabilities and confidences within 0–1, scores within the range of the levels
+you sent. Do this in your own code: the Python SDK's response types (as of
+`typesafe_sdk` 0.7.1) accept any string as a choice and any float as a probability
+or confidence. Validation catches contract problems. It says nothing about whether
 the judgment is right.
 
 ## Keep authority in code
