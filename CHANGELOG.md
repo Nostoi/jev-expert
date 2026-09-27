@@ -11,9 +11,10 @@ shipped files (`.claude-plugin/`, `skills/`, `agents/`) that does not raise it.
 ## [0.1.3] - 2026-09-26
 
 ### Changed
-- When a user reports a bad decision but limits the work to the questions, the
-  skill and the reviewer agent now keep to the questions instead of running a
-  full audit, and add one line saying the incident may have a cause elsewhere.
+- When a user reports a bad decision but explicitly limits the work to the
+  questions, the skill and the reviewer agent keep to the questions (the old text
+  said to run a full audit) and add one line saying the incident may have a cause
+  elsewhere, offering to audit it.
 
 ## [0.1.2] - 2026-09-26
 

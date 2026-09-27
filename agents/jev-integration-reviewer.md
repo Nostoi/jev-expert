@@ -34,7 +34,8 @@ lists for the API and primitives, and say in your report that you did.
 
 The caller names the scope (files, a diff, a module) and what to review. A report
 of a wrong, missed, or suspicious decision runs the full review below, whatever
-cause the caller suspects, unless the user limited the work to the questions. Only
+cause the caller suspects, unless the user explicitly limited the work to the
+questions. Only
 a request to review the questions themselves runs item 5 alone: the question
 definitions, the state each one reads, how they are grouped into requests, and how
 the code reads the answers. Report nothing else as a finding; list the other areas
