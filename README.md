@@ -72,26 +72,55 @@ each variant is a `{qid: question}` object in the API's question shape. See
 
 ## How well does it work?
 
-The skill was evaluated with Anthropic's skill-creator loop. Three realistic tasks
-(implement, audit, rollout readiness) were each run once with this skill and once
-without it. The baseline **had the official TypeSafe skill**, so the comparison
-measures what this plugin adds on top of it.
+Three realistic tasks (implement, audit, rollout readiness) were each run three
+times with 0.1.3 and three times without it. Both arms **had the official
+TypeSafe skill installed**, so the comparison measures what this plugin adds to
+that setup. Whether the official skill actually loaded varied: in the baseline it
+loaded in every task-1 run, two of three task-2 runs and no task-3 run; with the
+plugin it loaded only in task 1.
+Both arms ran on Sonnet in a session with no user settings, with docs access and
+without sub-agents (so the plugin's reviewer agent never ran). One model per task
+graded all six runs under shuffled labels, running probes against the code where
+an assertion called for one. The pass rule was fixed before any run: the plugin
+must be at least even on every task and ahead by 3 or more on at least two.
 
-| Iteration 2 | With `jev-engineering` | Official skill only |
-|---|---|---|
-| Assertion pass rate (mean) | 100% (36/36) | 64% ± 19% |
-| Wall time per task | ~590 s | ~592 s |
-| Tokens per task | ~132k (+14%) | ~116k |
+Scores count only assertions that a competent engineer with the official skill
+alone would be expected to meet from the prompt:
 
-Read these numbers as a smoke test, not a benchmark:
+| Three runs each | With 0.1.3 | Official skill only | Cost with / without |
+|---|---|---|---|
+| 1. Implement a Jev classifier | 33/33 | 18/33 | $5.02 / $2.36 |
+| 2. Audit an outage | 30/30 | 22/30 | $3.24 / $2.79 |
+| 3. Review rollout readiness | 25/27 | 11/27 | $1.25 / $1.27 |
 
-- There are 3 tasks with one run each.
-- The plugin's author wrote the assertions and revised them after iteration 1.
+- Without the plugin, all three implementations replaced the keyword router
+  outright. In probes, an API error or a missing answer crashed ticket handling
+  before the page was sent, and an unknown queue or an urgency of 1.7 went
+  straight into routing. With the plugin, all three kept the keyword route as the
+  fallback and passed those probes. Eval 1 took about twice as long and cost about
+  twice as much with the plugin.
+- In the audit, only the plugin's runs flagged the queue question's missing
+  no-match option and stopped invalid answers from driving pages.
+- In the rollout review, only the plugin's runs said routing accuracy was
+  unmeasured, flagged the unpinned model alias, and named unvalidated answers as a
+  blocker. The plugin recommended a staged rollout in only 1 of 3 runs.
+- Five more eval 1 assertions reward this plugin's own conventions (mode switch,
+  question module, model logging). They are scored separately: 14/15 with the
+  plugin and 0/15 without.
+
+Limits:
+
+- Three runs per task, on one model.
+- The plugin's author built the fixtures and wrote the assertions.
 - A model did the grading.
+- Six of the nine plugin runs mention "skill" or the skill's name in their output,
+  so the graders could often tell the arms apart. The pass rule still holds
+  without task 3.
 
-Iteration 1 scored 94% against 65%. In a separate headless run, the reviewer agent
-found the defects planted in `evals/fixtures/ticket-router-jev`. The prompts,
-assertions and fixtures are in `evals/` so you can rerun or extend them.
+An earlier smoke test (one run per task, unisolated) scored 100% against 64%. In a
+separate headless run, the reviewer agent found the defects planted in
+`evals/fixtures/ticket-router-jev`. The prompts, assertions and fixtures are in
+`evals/` so you can rerun or extend them.
 
 A fourth eval asks only for a review of the Jev questions in eleven files, with ten
 defects drawn from the docs, one from this skill, and five clean controls. Each arm
@@ -120,6 +149,8 @@ probability above 1, one below 0, and NaN, plus a valid answer as a control:
 
 Audits in 0.1.1 fixed the reported failure but left invalid Jev answers driving
 pages and queues. 0.1.2 has the audit check the whole integration before it closes.
+These runs had no docs access, so they aren't directly comparable with the 0.1.3
+comparison above.
 
 ## Versioning
 

@@ -24,7 +24,26 @@
         "Question quality: urgency is asked with a concrete yes boundary (exact condition in instructions or true/false criteria), phrased so a high value means urgent",
         "Question quality: no question asks Jev to count, do arithmetic, or compare dates",
         "The model ID returned in each response is recorded in logs or the decision record",
-        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)"
+        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)",
+        "Probe: in active mode, each of these Jev responses falls back to the keyword route: a queue choice not in the question's criteria, an urgency probability above 1 (e.g. 1.7), one below 0 (e.g. -0.2), and NaN; and a valid Jev answer that disagrees with the keyword route still drives the outcome"
+      ],
+      "convention_assertions": [
+        1,
+        4,
+        6,
+        8,
+        15
+      ],
+      "excluded_assertions": [
+        16
+      ],
+      "grading_rules": [
+        "Grade every assertion, including convention and excluded ones; the labels apply only when scoring.",
+        "Run probes and tests in a copy of the run's repo, with the Jev client mocked at whatever boundary the run's code uses and side effects counted through the project's actions module. No real network calls.",
+        "A probe that cannot be built because the code has no such path is a FAIL with the reason stated.",
+        "Score each arm by the outcome subset: assertions not listed in convention_assertions or excluded_assertions, summed over runs. Report the convention subset separately.",
+        "Comparing two arms at three runs each: the treatment shows a benefit only if it is at least even with the baseline on every eval and ahead by 3 or more on at least two.",
+        "Response-validation probe: separate probes in active mode (or the code's equivalent live path), each on a ticket where the keyword route and the bad Jev value lead to different outcomes: (a) a queue choice not in the criteria, (b) urgency 1.7, (c) urgency -0.2, (d) urgency NaN, (e) a valid Jev answer that disagrees with the keyword route. PASS only if (a)-(d) each produce the keyword route's outcome and (e) produces Jev's. Report each sub-probe."
       ]
     },
     {
@@ -44,8 +63,20 @@
         "New regression tests assert paging behaviour for the failure path and for shadow mode",
         "uv run pytest passes and completes in under 10 seconds",
         "Question quality: flags or fixes the queue Choice's missing no-match/general option",
-        "Jev responses are validated (unknown choice key or out-of-range value falls back to the keyword route)",
+        "Probe: in active mode, each of these Jev responses falls back to the keyword route: a queue choice not in the question's criteria, an urgency probability above 1 (e.g. 1.7), one below 0 (e.g. -0.2), and NaN; and a valid Jev answer that disagrees with the keyword route still drives the outcome",
         "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)"
+      ],
+      "convention_assertions": [],
+      "excluded_assertions": [
+        11
+      ],
+      "grading_rules": [
+        "Grade every assertion, including convention and excluded ones; the labels apply only when scoring.",
+        "Run probes and tests in a copy of the run's repo, with the Jev client mocked at whatever boundary the run's code uses and side effects counted through the project's actions module. No real network calls.",
+        "A probe that cannot be built because the code has no such path is a FAIL with the reason stated.",
+        "Score each arm by the outcome subset: assertions not listed in convention_assertions or excluded_assertions, summed over runs. Report the convention subset separately.",
+        "Comparing two arms at three runs each: the treatment shows a benefit only if it is at least even with the baseline on every eval and ahead by 3 or more on at least two.",
+        "Response-validation probe: separate probes in active mode (or the code's equivalent live path), each on a ticket where the keyword route and the bad Jev value lead to different outcomes: (a) a queue choice not in the criteria, (b) urgency 1.7, (c) urgency -0.2, (d) urgency NaN, (e) a valid Jev answer that disagrees with the keyword route. PASS only if (a)-(d) each produce the keyword route's outcome and (e) produces Jev's. Report each sub-probe."
       ]
     },
     {
@@ -64,7 +95,19 @@
         "response.md flags the unpinned jev-latest alias",
         "The repo's default JEV_MODE is not 'active' after the agent's changes (agent did not flip production on itself)",
         "Question quality: flags the queue Choice's missing no-match/general option as an issue",
-        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)"
+        "No credential value appears in the run's transcript (scanned for the key's value, which is never printed)",
+        "response.md names unvalidated Jev responses (an unknown choice key or out-of-range value reaching the routing or paging decision) as a blocker"
+      ],
+      "convention_assertions": [],
+      "excluded_assertions": [
+        9
+      ],
+      "grading_rules": [
+        "Grade every assertion, including convention and excluded ones; the labels apply only when scoring.",
+        "Run probes and tests in a copy of the run's repo, with the Jev client mocked at whatever boundary the run's code uses and side effects counted through the project's actions module. No real network calls.",
+        "A probe that cannot be built because the code has no such path is a FAIL with the reason stated.",
+        "Score each arm by the outcome subset: assertions not listed in convention_assertions or excluded_assertions, summed over runs. Report the convention subset separately.",
+        "Comparing two arms at three runs each: the treatment shows a benefit only if it is at least even with the baseline on every eval and ahead by 3 or more on at least two."
       ]
     },
     {
