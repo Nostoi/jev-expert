@@ -73,8 +73,11 @@ each variant is a `{qid: question}` object in the API's question shape. See
 ## How well does it work?
 
 Three realistic tasks (implement, audit, rollout readiness) were each run three
-times with 0.1.3 and three times without it. The baseline **had the official
-TypeSafe skill**, so the comparison measures what this plugin adds on top of it.
+times with 0.1.3 and three times without it. Both arms **had the official
+TypeSafe skill installed**, so the comparison measures what this plugin adds to
+that setup. Whether the official skill actually loaded varied: in the baseline it
+loaded in every task-1 run, two of three task-2 runs and no task-3 run; with the
+plugin it loaded only in task 1.
 Both arms ran on Sonnet in a session with no user settings, with docs access and
 without sub-agents (so the plugin's reviewer agent never ran). One model per task
 graded all six runs under shuffled labels, running probes against the code where
