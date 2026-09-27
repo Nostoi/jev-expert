@@ -7,8 +7,9 @@ description: >
   scope unchanged: if the user asked only to review the questions themselves, say
   so and ask for a question review. A report of a wrong, missed, or suspicious
   decision is a full review whatever cause the user suspects, unless the user
-  explicitly limited the work to the questions: then ask for a question review
-  and pass the incident along. Reports defects with concrete failure scenarios; does not edit code.
+  explicitly limited the work to the questions: then ask for a question review of
+  every question in scope, with the incident as context, not as a reason to review
+  fewer. Reports defects with concrete failure scenarios; does not edit code.
   Runs a live question test only when the caller explicitly authorizes API calls.
 tools: Read, Grep, Glob, Bash, WebFetch
 model: sonnet

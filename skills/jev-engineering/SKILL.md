@@ -168,7 +168,8 @@ delegate to the reviewer agent, ask it for a question review.
 A report of a wrong, missed, or suspicious decision is an audit — follow the audit
 workflow in `references/workflows.md` — whatever cause the user suspects, unless
 the user also limits the work to the questions. Then their scope wins: review only
-the questions, and add one line, apart from the findings, saying the reported
+the questions, all of those in scope rather than only the ones near the incident,
+and add one line, apart from the findings, saying the reported
 incident may have a cause outside the questions and offering to audit it.
 
 ## Credentials
