@@ -163,9 +163,14 @@ The reverse does not hold. When the user asks only to review the questions
 themselves, report findings only about the question definitions, the state each one
 reads, how they are grouped into requests, and how the code reads the answers. Say
 what you did not review and offer to, without asserting defects there. If you
-delegate to the reviewer agent, ask it for a question review. This does not apply
-to a report of a wrong, missed, or suspicious decision: that is an audit — follow
-the audit workflow in `references/workflows.md` — whatever cause the user suspects.
+delegate to the reviewer agent, ask it for a question review.
+
+A report of a wrong, missed, or suspicious decision is an audit — follow the audit
+workflow in `references/workflows.md` — whatever cause the user suspects, unless
+the user also explicitly limits the work to the questions. Then their scope wins: review only
+the questions, all of those in scope rather than only the ones near the incident,
+and add one line, apart from the findings, saying the reported
+incident may have a cause outside the questions and offering to audit it.
 
 ## Credentials
 
