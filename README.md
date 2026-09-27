@@ -111,9 +111,8 @@ Limits:
 - The plugin's author built the fixtures and wrote the assertions.
 - A model did the grading.
 - Six of the nine plugin runs mention "skill" or the skill's name in their output,
-  so the graders could often tell the arms apart. That matters most for task 3,
-  where every assertion is judged from prose. The pass rule still holds without
-  task 3.
+  so the graders could often tell the arms apart. The pass rule still holds
+  without task 3.
 
 An earlier smoke test (one run per task, unisolated) scored 100% against 64%. In a
 separate headless run, the reviewer agent found the defects planted in
